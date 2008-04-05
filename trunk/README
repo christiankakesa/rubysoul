@@ -1,0 +1,16 @@
+#--- ! RubySoul - Christian KAKESA - Etna_2008 - @ 27/10/2006
+#--- ! Bugs-report : Christian KAKESA <christian.kakesa@gmail.com>
+#--- ! If you have any probleme with rubysoul_server, please send me an email
+#--- ! with bugs your description.
+
+RubySoul is a command line ruby NetSoul client.
+Complete your "config.yml" with your "login_l" and "yourpass".
+Run PATH_TO_RUBYSOUL_SERVER/rubysoul.rb like this : "rubysoul.rb" or "./rubysoul.rb" or "rubysoul.rb", depending on your plateforme.
+
+[Example of "config.yml"]
+:login: your login
+:pass: 'your socks password'
+:location: the location your are connected
+...
+
+TODO: Need to add new connection mode with kerberos.
