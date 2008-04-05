@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Introduction =
+
+RubySoul is a console shell NetSoul client written in ruby.
+
+
+= Details =
+
+This client provides:
+  * Chat
+  * Status management
+  * Contacts management
