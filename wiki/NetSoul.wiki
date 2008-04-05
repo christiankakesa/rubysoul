@@ -1,0 +1,11 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Introduction =
+
+NetSoul is the IONIS school athentification protocol.
+
+
+= Details =
+
+NetSoul protocol give access to all members of the IONIS school, a rights for use network services like : proxies, printing, vpn etc...
