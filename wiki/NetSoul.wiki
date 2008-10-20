@@ -1,4 +1,3 @@
-#labels Featured
 What is NetSoul ?
 
 = Introduction =
