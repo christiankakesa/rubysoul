@@ -1,0 +1,5 @@
+#--- | Application config
+:login: kakesa_c
+:pass: 'pasword'
+:location: 'RubySoul'
+:status: actif
