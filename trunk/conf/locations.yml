@@ -1,11 +1,4 @@
-#--- | Application config
-:login: kakesa_c
-:pass: 'your_password'
-:location: 'RubySoul'
-:status: actif
-:server:
-  :host: ns-server.epita.fr
-  :port: 4242
+#--- | Users locations
 :iptable:
   lab-cisco-mid-sr: 10.251.
   etna: 10.245.
