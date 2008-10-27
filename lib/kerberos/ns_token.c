@@ -24,15 +24,17 @@ static VALUE k_init(VALUE self)
 static VALUE k_get_token(VALUE self, VALUE login, VALUE password)
 {
 	k_data_t	*data;
-	unsigned char	*token;
 	unsigned char	*token_base64;
+	unsigned char	*token;
 	size_t		elen;
 
 	data = calloc(1, sizeof (k_data_t));
 	data->login = STR2CSTR(login);
 	data->unix_pass = STR2CSTR(password);
 	data->itoken = GSS_C_NO_BUFFER;
-	if (check_tokens(data) != 1) return Qfalse;
+	if (check_tokens(data) != 1)
+		return Qfalse;
+
 	token = strdup((const unsigned char*)data->otoken.value);
 	token_base64 = base64_encode((const unsigned char*)data->otoken.value, data->otoken.length, &elen);
 	rb_iv_set(self, "@login", login);

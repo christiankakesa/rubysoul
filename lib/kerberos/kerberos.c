@@ -21,10 +21,9 @@ void	display_status(k_data_t *data)
 	gss_buffer_desc	msg;
 
 	gss_display_status(&minor, data->min, GSS_C_GSS_CODE, GSS_C_NO_OID, &status, &msg);
-	puts(msg.value);
+	if (msg.value) puts(msg.value);
 	gss_display_status(&minor, data->maj, GSS_C_GSS_CODE, GSS_C_NO_OID, &status, &msg);
-	puts(msg.value);
-	exit(1);
+	if (msg.value) puts(msg.value);
 }
 
 krb5_error_code	get_new_tickets(	k_data_t *data,
@@ -39,10 +38,6 @@ krb5_error_code	get_new_tickets(	k_data_t *data,
 
    memset(&cred, 0, sizeof(cred));
    krb5_get_init_creds_opt_init (&opt);
-   /*krb5_get_init_creds_opt_set_default_flags(context, "kinit",
-                                             principal->realm, &opt);*/
-   /* if (thiz->get_password)
-      password = thiz->get_password(thiz->get_password_data); */
    ret = krb5_get_init_creds_password(context,
                                       &cred,
                                       principal,
@@ -52,7 +47,6 @@ krb5_error_code	get_new_tickets(	k_data_t *data,
                                       0,
                                       NULL,
                                       &opt);
-   /* free(password); */
    if (ret == KRB5_LIBOS_PWDINTR ||
        ret == KRB5KRB_AP_ERR_MODIFIED ||
        ret == KRB5KRB_AP_ERR_MODIFIED)
@@ -76,12 +70,7 @@ int	my_init(k_data_t *data)
 
    if (krb5_init_context(&context))
       return (1);
-/*
-#ifdef __UNIX__
-   if (!data->login)
-      krb5SetLogin(getlogin());
-#endif
-*/
+
    if (!data->login ||
        krb5_build_principal(context, &principal, sizeof (NS_REALM) - 1, NS_REALM, data->login, 0))
       return (1);
@@ -173,6 +162,9 @@ int	check_tokens(k_data_t *data)
    return (0);
 }
 
+/**
+ * Encode string in base64
+ */
 unsigned char * base64_encode(const unsigned char *src, size_t len, size_t *out_len)
 {
 	unsigned char *out, *pos;

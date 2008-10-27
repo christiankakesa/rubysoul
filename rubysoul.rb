@@ -1,10 +1,14 @@
 #!/usr/bin/ruby -w
 begin
-  require 'lib/netsoul'
+  require 'netsoul'
 rescue LoadError
   puts "Error: #{$!}"
   exit
 end
 
-r = RubySoul::NetSoul.new
-r.start()
+begin
+  r = RubySoul::NetSoul.new
+  r.start()
+rescue
+  puts "#{$!}"
+end
