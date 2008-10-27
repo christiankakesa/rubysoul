@@ -1,0 +1,7 @@
+All that you need to satrt with RubySoul.
+
+=Configure RubySoul=
+=Contacts management=
+=Send message to contacts=
+=Receive message from user=
+=Receive informations from the NetSoul server==
