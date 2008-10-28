@@ -36,6 +36,7 @@ rubysoul#> state:away
 Will change your status in *`away`*.
 
 =Show your current status and your configuration information=
+You can print informations with *show* command.
 ==Show your current status==
 {{{
 rubysoul#> show:state
@@ -44,6 +45,21 @@ rubysoul#> show:state
 {{{
 rubysoul#> show:config
 }}}
+
+=Update your configuration file=
+With *config* command you can change all the data in your config file. element who could be changed : *`login`*, *`socks_password`*, *`unix_password`*, *`state`*, *`location`*, *`user_group`*, *`system`*. Example : 
+{{{
+config:location:My house
+}}}
+Will set and save "My house" for your location in config file. This change will take effect after restarting RubySoul.
+
+=Send a message=
+
+=Print your contacts or connected contacts=
+
+=Add contacts to your contact list=
+
+=Delete contcats from contact list=
 
 =Exit the program=
 Just type *q* or *quit* or *exit* command.
