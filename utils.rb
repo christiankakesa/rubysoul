@@ -14,7 +14,7 @@ module RubySoul
 
   def self.help
     puts "*******************************************************************************"
-    puts "* [commands]          : help - exit,quit,q - credits,credit                   *"
+    puts "* [commands]          : help,? - exit,quit,q - credits,credit                   *"
     puts "* [state]             : state:actif,away,idle,lock                            *"
     puts "* [show]              : show:state, show:config                               *"
     puts "* [set config]        : config:login:my_login, socks_password, unix_password, *"
@@ -36,6 +36,10 @@ module RubySoul
   def self.print_command_not_found
     puts "command not found! type 'help' for more information."
   end
+
+    def self.prompt
+      "rubysoul#> "
+    end
 
   def self.escape(str)
     str = URI.escape(str)
