@@ -29,6 +29,8 @@ rubysoul#>
 }}}
 Now you can type *help* or *?* command to print help informations. You can type *credits* or *credit* command to know more about the application.
 
+You can use [TAB] keyboard key to show contextual valid command.
+
 =Change your status=
 NetSoul client many user status but 4 are implemented by all : *`actif`*, *`away`*, *`idle`*, *`lock`*. You can change your status with *state* command :
 {{{
