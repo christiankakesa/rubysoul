@@ -1,5 +1,9 @@
 Ruby has no kerberos binding for now. to solve this problem i wrote a ruby/c extension to retrieve Kerberos token for NetSoul authentication.
 
+=Dependencies=
+ * krb5 development header files
+ * gssapi development header files
+
 =Build the *NsToken* extension=
 {{{
 $ cd ./lib/kerberos
