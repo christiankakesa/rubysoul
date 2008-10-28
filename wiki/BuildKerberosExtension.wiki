@@ -1,13 +1,13 @@
-#summary One-sentence summary of this page.
+Ruby has no kerberos binding for now. to solve this problem i wrote a ruby/c extension to retrieve Kerberos token for NetSoul authentication.
 
-= Introduction =
+=Build the *NsToken* extension=
+{{{
+$ cd ./lib/kerberos
+$ ruby extconf.rb
+$ make
+$ cd ../..
+}}}
 
-Add your content here.
+If no error ? All is right, you can put your unix_password directly in conf/config.yml or in RubySoul shell ([Documentation See documentation page]).
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Have fun.
