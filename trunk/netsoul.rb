@@ -238,6 +238,14 @@ module RubySoul
           @data[:contacts][response.split(' ')[2].to_sym][response.split(' ')[1].to_sym] = true
         end
         return
+      when "msg"
+        puts "\n"
+        puts "[Message from: #{user.split(":")[3].split('@')[0]}]"
+        puts URI.unescape(response.split(' ')[1])
+        puts "----------"
+        print RubySoul::prompt()
+        $stdout.flush()
+        return
       end
     end
 
@@ -482,7 +490,7 @@ module RubySoul
     end
 
     def prompt
-      "rubysoul#> "
+      RubySoul::prompt()
     end
 
     def completion_proc
