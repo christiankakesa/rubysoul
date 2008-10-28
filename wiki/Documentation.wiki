@@ -1,6 +1,11 @@
 All that you need to start with RubySoul.
  * *[BuildKerberosExtension Read this page to build the the NsToken extension for kerberos authentication]*
 
+=Dependencies=
+ * ruby 1.8
+ * libreadline-ruby
+ * NsToken (Included library only for kerberos authentication)
+
 =Configure RubySoul=
 Edit the configuration file stored in *"conf/config.yml"*
 {{{
