@@ -59,7 +59,10 @@ Will set and save "My house" for your location in config file. This change will 
 
 =Add contacts to your contact list=
 
-=Delete contcats from contact list=
+=Delete contacts from contact list=
+
+=Shell history=
+You can retrieve old shell entered command with your keyboard arrow up and arrow down.  
 
 =Exit the program=
 Just type *q* or *quit* or *exit* command.
