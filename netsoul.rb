@@ -207,7 +207,7 @@ module RubySoul
       case sub_cmd
       when "mail"
         email_sender, email_subject = response.split(' ')[2..3]
-        puts "Vous avez recu un email !!!\nDe: " + URI.unescape(email_sender) + "\nSujet: " + URI.unescape(email_subject)
+        puts "Vous avez reçu un email !!!\nDe: " + URI.unescape(email_sender) + "\nSujet: " + URI.unescape(email_subject)
         return true
       when "host"
         tel_sender = response.split(' ')[2]
@@ -369,7 +369,7 @@ module RubySoul
     def get_server_timestamp
       Time.now.to_i - @server_timestamp_diff.to_i
     end
-  end #--- | Class NetSoul
+  end #--- | class NetSoul
 
   class Shell
     def initialize(ns_object)
@@ -536,7 +536,7 @@ module RubySoul
         print prompt() + line
       end
     end
-  end #--- | Class Shell
+  end #--- | class Shell
 
 end #--- | module
 
