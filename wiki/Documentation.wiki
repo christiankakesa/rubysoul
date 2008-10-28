@@ -35,5 +35,15 @@ rubysoul#> state:away
 }}}
 Will change your status in *`away`*.
 
+=Show your current status and your configuration information=
+==Show your current status==
+{{{
+rubysoul#> show:state
+}}}
+==Show your configuration information==
+{{{
+rubysoul#> show:config
+}}}
+
 =Exit the program=
 Just type *q* or *quit* or *exit* command.
