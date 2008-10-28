@@ -13,7 +13,7 @@ end
 
 module RubySoul
   APP_NAME = "RubySoul"
-  VERSION = "3.2.00b"
+  VERSION = "3.2.01b"
   CONTACT_EMAIL = "Christian KAKESA <christian.kakesa@gmail.com>"
 
   class NetSoul
@@ -24,8 +24,12 @@ module RubySoul
     @data = nil
     @host = nil
     @port = nil
+    @current_state = nil
     @socket = nil
     @shell = nil
+
+    attr_reader	:current_state
+    attr_accessor	:data
 
     def initialize
       @mutex_connected = Mutex.new
@@ -248,6 +252,7 @@ module RubySoul
 
     def ns_state(state)
       send(@user_cmd + " state " + state.to_s + ":" +  get_server_timestamp().to_s)
+      @current_state = state
     end
 
     def ns_send_msg(users, msg)
@@ -271,8 +276,16 @@ module RubySoul
       YAML::load_file("conf/config.yml")
     end
 
+    def save_config
+      File.open("conf/config.yml", "w") {|file| file.puts(@data[:config].to_yaml.to_s); file.close;}
+    end
+
     def get_contacts
       YAML::load_file("conf/contacts.yml")
+    end
+
+    def save_contacts
+      File.open("conf/contacts.yml", "w") {|file| file.puts(@data[:contacts].to_yaml.to_s); file.close;}
     end
 
     def add_contacts(users)
@@ -288,7 +301,7 @@ module RubySoul
       end
       ns_who(@data[:contacts].keys.join(',')) if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
       ns_watch_log_user(@data[:contacts].keys.join(',')) if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
-      File.open("conf/contacts.yml", "w") {|file| file.puts(@data[:contacts].to_yaml.to_s); file.close;}
+      save_contacts()
     end
 
     def add_user(users) # don't use alias for lisibility
@@ -307,7 +320,7 @@ module RubySoul
       end
       ns_who(@data[:contacts].keys.join(',')) if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
       ns_watch_log_user(@data[:contacts].keys.join(',')) if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
-      File.open("conf/contacts.yml", "w") {|file| file.puts(@data[:contacts].to_yaml.to_s); file.close;}
+      save_contacts()
     end
 
     def del_user(users) # don't use alias for lisibility
@@ -358,17 +371,19 @@ module RubySoul
 
     def shell_init
       @valid_cmds =
-      { "send_msg"	=> [],
-        "state"	=> ["actif", "away", "idle", "lock"],
-        "list"	=> ["contacts", "connected_contacts"],
-        "add"		=> ["contact"],
-        "del"		=> ["contact"],
-        "help"	=> [],
-        "?"		=> [],
-        "exit"	=> [],
-        "bye"		=> [],
-        "quit"	=> [],
-        "q"		=> []
+      { "send_msg" => [],
+        "state"    => ["actif", "away", "idle", "lock"],
+        "show"     => ["state", "config"],
+        "config"   => ["login", "socks_password", "unix_password", "state", "location", "user_group", "system"],
+        "list"     => ["contacts", "connected_contacts"],
+        "add"      => ["contacts"],
+        "del"      => ["contacts"],
+        "help"     => [],
+        "?"        => [],
+        "exit"     => [],
+        "bye"      => [],
+        "quit"     => [],
+        "q"        => []
       }
       Readline.basic_word_break_characters = ""
       Readline.completion_append_character = nil
@@ -377,7 +392,8 @@ module RubySoul
 
     def start
       loop do
-        msg = Readline.readline(prompt().to_s)
+        @rd_msg = Readline.readline(prompt().to_s)
+        msg = @rd_msg
         msg.chomp!
         Readline::HISTORY.push(msg) if (msg.length > 0)
         if (msg == "?" || msg == "help")
@@ -397,6 +413,41 @@ module RubySoul
               else
                 puts "Command #{msg.split(":")[1]} not allowed"
               end
+            when "show"
+              case msg.split(":")[1]
+              when "state"
+                puts "Your current state is \"#{@ns.current_state}\""
+              when "config"
+                puts @ns.data[:config].to_yaml.to_s
+              else
+                RubySoul::print_command_not_found()
+              end
+            when "config"
+              found = case msg.split(":")[1]
+              when "login"
+                @ns.data[:config][:login] = msg.split(":")[2] if msg.split(":").length == 3
+              when "socks_password"
+                @ns.data[:config][:socks_password] = msg.split(":")[2] if msg.split(":").length == 3
+              when "unix_password"
+                @ns.data[:config][:unix_password] = msg.split(":")[2] if msg.split(":").length == 3
+              when "state"
+                if not @valid_cmds["state"].include?(msg.split(":")[2])
+                  puts "State is not valid. Valid states are : #{@valid_cmds["state"].join(", ")}"
+                  false
+                else
+                  @ns.data[:config][:state] = msg.split(":")[2] if msg.split(":").length == 3
+                end
+              when "location"
+                @ns.data[:config][:location] = msg.split(":")[2] if msg.split(":").length == 3
+              when "user_group"
+                @ns.data[:config][:user_group] = msg.split(":")[2] if msg.split(":").length == 3
+              when "system"
+                @ns.data[:config][:system] = msg.split(":")[2] if msg.split(":").length == 3
+              else
+                RubySoul::print_command_not_found()
+                false
+              end
+              @ns.save_config() if found
             when "list"
               case msg.split(":")[1]
               when "contacts"
@@ -408,14 +459,14 @@ module RubySoul
               end
             when "add"
               case msg.split(":")[1]
-              when "contact"
+              when "contacts"
                 @ns.add_user(msg.split(":")[2]) if msg.split(":").length == 3
               else
                 RubySoul::print_command_not_found()
               end
             when "del"
               case msg.split(":")[1]
-              when "contact"
+              when "contacts"
                 @ns.del_user(msg.split(":")[2]) if msg.split(":").length == 3
               else
                 RubySoul::print_command_not_found()
@@ -442,25 +493,35 @@ module RubySoul
           @valid_cmds.each do |k, v|
             print k.to_s + " "
           end
-        elsif (input.to_s == ("state" or "state:"))
+        elsif (input.to_s == "state" || input.to_s == "state:")
           puts "\n"
           @valid_cmds["state"].each do |v|
-            print ":" + v.to_s + " "
+            print input.to_s.include?(":") ? v.to_s + " " : ":" + v.to_s + " "
           end
-        elsif (input.to_s == "list")
+        elsif (input.to_s == "show" || input.to_s == "show:")
+          puts "\n"
+          @valid_cmds["show"].each do |v|
+            print input.to_s.include?(":") ? v.to_s + " " : ":" + v.to_s + " "
+          end
+        elsif (input.to_s == "config" || input.to_s == "config:")
+          puts "\n"
+          @valid_cmds["config"].each do |v|
+            print input.to_s.include?(":") ? v.to_s + " " : ":" + v.to_s + " "
+          end
+        elsif (input.to_s == "list" || input.to_s == "list:")
           puts "\n"
           @valid_cmds["list"].each do |v|
-            print ":" + v.to_s + " "
+            print input.to_s.include?(":") ? v.to_s + " " : ":" + v.to_s + " "
           end
-        elsif (input.to_s == "add")
+        elsif (input.to_s == "add" || input.to_s == "add:")
           puts "\n"
           @valid_cmds["add"].each do |v|
-            print ":" + v.to_s + " "
+            print input.to_s.include?(":") ? v.to_s + " " : ":" + v.to_s + " "
           end
-        elsif (input.to_s == "del")
+        elsif (input.to_s == "del" || input.to_s == "del:")
           puts "\n"
           @valid_cmds["del"].each do |v|
-            print ":" + v.to_s + " "
+            print input.to_s.include?(":") ? v.to_s + " " : ":" + v.to_s + " "
           end
         end
         puts "\n"

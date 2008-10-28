@@ -13,14 +13,17 @@ module RubySoul
   end
 
   def self.help
-    puts "******************************************************************************"
-    puts "* [commands]          : help - exit,quit,q - credits,credit                  *"
-    puts "* [state]             : state:actif,away,idle,lock                           *"
-    puts "* [send message]      : send_msg:login_1 login_2 login_3:your message        *"
-    puts "* [list]              : list:contacts, list:connected_contacts               *"
-    puts "* [add]               : add:user:login_1 login_2 login_3                     *"
-    puts "* [del]               : del:user:login_1 login_2 login_3                     *"
-    puts "******************************************************************************"
+    puts "*******************************************************************************"
+    puts "* [commands]          : help - exit,quit,q - credits,credit                   *"
+    puts "* [state]             : state:actif,away,idle,lock                            *"
+    puts "* [show]              : show:state, show:config                               *"
+    puts "* [set config]        : config:login:my_login, socks_password, unix_password, *"
+    puts "*                       state, location, user_group, system                   *"
+    puts "* [send message]      : send_msg:login_1 login_2 login_3:your message         *"
+    puts "* [list]              : list:contacts, list:connected_contacts                *"
+    puts "* [add]               : add:contcats:login_1 login_2 login_3                  *"
+    puts "* [del]               : del:contacts:login_1 login_2 login_3                  *"
+    puts "*******************************************************************************"
   end
 
   def self.credits
