@@ -54,8 +54,17 @@ config:location:My house
 Will set and save "My house" for your location in config file. This change will take effect after restarting RubySoul.
 
 =Send a message=
+You can send a message to one or more contact with *send_msg* command.
+{{{
+rubysoul#> send_msg:kakesa_c login_l:Hello guys !!!
+}}}
 
 =Print your contacts or connected contacts=
+RubySoul can list your contact list or connected contacts with *list* command and *`contacts`*, *`connected_contacts`* sub command.
+{{{
+rubysoul#> list:contacts
+rubysoul#> list:connected_contacts
+}}}
 
 =Add contacts to your contact list=
 
