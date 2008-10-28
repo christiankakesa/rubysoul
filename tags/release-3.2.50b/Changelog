@@ -1,0 +1,12 @@
+RubySoul Changelog
+
+[21/03/2008]
+DONE:
+- Add commands history
+- Add send message, credits, help, status functions
+- Add shell capability
+TODO:
+- list connected/all users function
+- add user function
+- del user function
+- Proper message receiving in shell

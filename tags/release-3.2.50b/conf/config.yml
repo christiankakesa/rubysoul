@@ -1,0 +1,8 @@
+#--- | Application config
+:login: 'login_l'        #--- | Your login
+:socks_password: ''      #--- | Socks password for md5 authentication
+:unix_password: ''       #--- | Unix password for kerberos authentication (default if set)
+:state: 'actif'          #--- | Could be, actif, away, idle, lock
+:location: '@ Home'      #--- | Set your location
+:user_group: 'etna_2008' #--- | Set your IONIS user group
+:system: 'Unix'          #--- | Set your operating system
