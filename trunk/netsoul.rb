@@ -13,7 +13,7 @@ end
 
 module RubySoul
   APP_NAME = "RubySoul"
-  VERSION = "3.2.01b"
+  VERSION = "3.2.50b"
   CONTACT_EMAIL = "Christian KAKESA <christian.kakesa@gmail.com>"
 
   class NetSoul
@@ -95,10 +95,10 @@ module RubySoul
           puts "Impossible to retrieve the kerberos token"
           exit
         end
-        send("#{@auth_cmd}_klog #{tk.token_base64} #{RubySoul::escape(@data[:config][:system])} #{RubySoul::escape(@location)} #{RubySoul::escape(@data[:config][:user_group])} #{RubySoul::escape(RubySoul::APP_NAME)}")
+        send("#{@auth_cmd}_klog #{tk.token_base64} #{RubySoul::escape(@data[:config][:system])} #{RubySoul::escape(@location)} #{RubySoul::escape(@data[:config][:user_group])} #{RubySoul::escape(RubySoul::APP_NAME+" "+RubySoul::VERSION)}")
       else
         reply_hash = Digest::MD5.hexdigest("%s-%s/%s%s" % [md5_hash, @client_host, @client_port, @data[:config][:socks_password]])
-        send("#{@auth_cmd}_log #{@data[:config][:login]} #{reply_hash} #{RubySoul::escape(@location)} #{RubySoul::escape(RubySoul::APP_NAME)}")
+        send("#{@auth_cmd}_log #{@data[:config][:login]} #{reply_hash} #{RubySoul::escape(@location)} #{RubySoul::escape(RubySoul::APP_NAME+" "+RubySoul::VERSION)}")
       end
       exit if not ns_parser(@socket.gets.strip)
       @mutex_connected.synchronize do
