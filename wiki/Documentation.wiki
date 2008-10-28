@@ -1,7 +1,39 @@
-All that you need to satrt with RubySoul.
+All that you need to start with RubySoul.
 
 =Configure RubySoul=
-=Contacts management=
-=Send message to contacts=
-=Receive message from user=
-=Receive informations from the NetSoul server==
+Edit the configuration file stored in *"conf/config.yml"*
+{{{
+#--- | Application config
+:login: 'login_l'        #--- | Your login
+:socks_password: ''      #--- | Socks password for md5 authentication
+:unix_password: ''       #--- | Unix password for kerberos authentication (default if set)
+:state: 'actif'          #--- | Could be, actif, away, idle, lock
+:location: '@ Home'      #--- | Set your location
+:user_group: 'etna_2008' #--- | Set your IONIS user group
+:system: 'Unix'          #--- | Set your operating system
+}}}
+
+=Run RubySoul=
+You can run rubysoul.rb script like this : 
+{{{
+ruby rubysoul.rb
+}}}
+*or*
+{{{
+./rubysoul.rb
+}}}
+RubySoul try to connect directly at start-up. If done you have a RubySoul prompt : 
+{{{
+rubysoul#> 
+}}}
+Now you can type `help` command to print help informations. You can type *credits* or *credit* command to know more about the application.
+
+=Change your status=
+NetSoul client many user status but 4 are implemented by all : *`actif`*, *`away`*, *`idle`*, *`lock`*. You can change your status with *state* command :
+{{{
+rubysoul#> state:away
+}}}
+Will change your status in *`away`*.
+
+=Exit the program=
+Just type *q* or *quit* or *exit* command.
