@@ -1,0 +1,1 @@
+*NsToken* is a RubySoul ruby/c extension to retrieve kerberos token for authentication.
