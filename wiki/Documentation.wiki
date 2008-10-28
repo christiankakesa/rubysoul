@@ -68,8 +68,16 @@ rubysoul#> list:connected_contacts
 }}}
 
 =Add contacts to your contact list=
+You can add one or more contacts with *add* command and *`contacts`* sub command.
+{{{
+rubysoul#> add:contacts:login_1 login_2
+}}}
 
 =Delete contacts from contact list=
+You can delete one or more contacts with *del* command and *`contacts`* sub command.
+{{{
+rubysoul#> del:contacts:login_1 login_2
+}}}
 
 =Shell history=
 You can retrieve old shell entered command with your keyboard arrow up and arrow down.  
