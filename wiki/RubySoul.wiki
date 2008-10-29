@@ -1,4 +1,3 @@
-#labels Featured
 What is RubySoul ?
 
 = Introduction =
