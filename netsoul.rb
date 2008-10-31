@@ -13,7 +13,7 @@ end
 
 module RubySoul
   APP_NAME = "RubySoul"
-  VERSION = "3.2.50b"
+  VERSION = "3.2.50"
   CONTACT_EMAIL = "Christian KAKESA <christian.kakesa@gmail.com>"
 
   class NetSoul
@@ -181,7 +181,7 @@ module RubySoul
     end
 
     def ns_recv_rep(line)
-      msg_num, msg = line.match(/^\w+\ (\d{3})\ \-\-\ (.*)/)[1..2]
+      msg_num = line.split(' ')[1]
       case msg_num.to_s
       when "001"
         puts "Command unknown"
@@ -341,6 +341,8 @@ module RubySoul
         @data[:contacts].keys.each do |user|
           puts user.to_s
         end
+      else
+        puts "No contacts in contact list"
       end
       return
     end
@@ -408,7 +410,7 @@ module RubySoul
           RubySoul::help()
         elsif (msg == "credits" || msg == "credit")
           RubySoul::credits()
-        elsif (msg == "exit" || msg == "bye" || msg == "q")
+        elsif (msg == "exit" || msg == "bye" || msg == "q" || msg == "quit")
           @ns.stop(false)
         else ## Parse complexe command line
           if (msg.split(":").length >= 2)
