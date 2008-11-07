@@ -1,4 +1,3 @@
-#labels Featured
 All that you need to start with RubySoul.
  * *[BuildKerberosExtension Read this page to build the the NsToken extension for kerberos authentication]*
 
