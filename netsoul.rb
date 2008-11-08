@@ -128,7 +128,7 @@ module RubySoul
         @thread_recv = nil
       end
       if @socket
-        ns_state("deconnexion")
+        send("exit")
         @socket.close
       end
       @socket = nil
