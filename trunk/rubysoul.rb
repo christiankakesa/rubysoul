@@ -11,4 +11,6 @@ begin
   r.start()
 rescue
   puts "#{$!}"
+ensure
+  retry
 end
