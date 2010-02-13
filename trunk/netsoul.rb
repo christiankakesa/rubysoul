@@ -22,8 +22,6 @@ module RubySoul
     @mutex_send = nil
     @thread_recv = nil
     @data = nil
-    @host = nil
-    @port = nil
     @current_state = nil
     @socket = nil
     @shell = nil
@@ -34,8 +32,6 @@ module RubySoul
     def initialize
       @mutex_connected = Mutex.new
       @mutex_send = Mutex.new
-      @host = "ns-server.epita.fr"
-      @port = 4242
       get_conf_data()
       trap("SIGINT") { stop(); exit; }
       trap("SIGTERM") { stop(); exit; }
@@ -44,6 +40,7 @@ module RubySoul
 
     def get_conf_data
       @data = Hash.new
+      @data[:server] = get_config_server()
       @data[:config] = get_config()
       @data[:contacts] = get_contacts()
       @data[:locations] = get_locations()
@@ -51,7 +48,7 @@ module RubySoul
 
     def login
       begin
-        @socket = TCPSocket.new @host, @port
+        @socket = TCPSocket.new @data[:server][:host], @data[:server][:port]
       rescue
         STDERR.puts "#{$!}"
         @connected = false
@@ -368,6 +365,10 @@ module RubySoul
 
     def get_locations
       YAML::load_file("conf/locations.yml")
+    end
+    
+    def get_config_server
+      YAML::load_file("conf/server.yml")
     end
 
     def get_server_timestamp
