@@ -13,7 +13,7 @@ end
 
 module RubySoul
   APP_NAME = "RubySoul"
-  VERSION = "3.2.51"
+  VERSION = "3.3.00"
   CONTACT_EMAIL = "Christian KAKESA <christian.kakesa@gmail.com>"
 
   class NetSoul
