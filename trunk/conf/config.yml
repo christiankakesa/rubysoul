@@ -1,8 +1,8 @@
 #--- | Application config
-:login: 'kakesa_c'               #--- | Your login
-:socks_password: "ayU4;.'#"      #--- | Socks password for md5 authentication
-:unix_password: '' #'efgmpV8:'       #--- | Unix password for kerberos authentication (default if set)
+:login: ''               #--- | Your login
+:socks_password: ''      #--- | Socks password for md5 authentication
+:unix_password: ''       #--- | Unix password for kerberos authentication (default if set)
 :state: 'actif'          #--- | Could be, actif, away, idle, lock
 :location: '@ Home'      #--- | Set your location
 :user_group: 'IONIS'     #--- | Set your IONIS user group
-:system: 'Ubuntu Intrepid Ibex'              #--- | Set your operating system
+:system: ''              #--- | Set your operating system
