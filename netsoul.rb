@@ -8,12 +8,12 @@ begin
   require 'logger'
   require 'utils'
 rescue LoadError
-  puts "Error: #{$!}"
+  STDERR.puts "Error: #{$!}"
 end
 
 module RubySoul
   APP_NAME = "RubySoul"
-  VERSION = "3.2.50"
+  VERSION = "3.2.51"
   CONTACT_EMAIL = "Christian KAKESA <christian.kakesa@gmail.com>"
 
   class NetSoul
@@ -36,10 +36,10 @@ module RubySoul
       @mutex_send = Mutex.new
       @host = "ns-server.epita.fr"
       @port = 4242
-      @shell = Shell.new(self)
       get_conf_data()
       trap("SIGINT") { stop(); exit; }
       trap("SIGTERM") { stop(); exit; }
+      @shell = Shell.new(self)
     end
 
     def get_conf_data
@@ -53,11 +53,9 @@ module RubySoul
       begin
         @socket = TCPSocket.new @host, @port
       rescue
-        puts "Error: #{$!}"
-        @mutex_connected.synchronize do
-          @connected = false
-        end
-        sleep(3)
+        STDERR.puts "#{$!}"
+        @connected = false
+        sleep(1)
         retry
       end
       buf = @socket.gets.strip
@@ -106,8 +104,12 @@ module RubySoul
       end
       ns_attach()
       ns_state(@data[:config][:state]) if @data[:config][:state].length > 0
-      ns_who(@data[:contacts].keys.join(',')) if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
-      ns_watch_log_user(@data[:contacts].keys.join(',')) if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
+      if (@data[:contacts].is_a?(Hash) && @data[:contacts].length > 0)
+      	ns_who(@data[:contacts].keys.join(','))
+      end
+      if @data[:contacts].is_a?(Hash) && @data[:contacts].length > 0
+      	ns_watch_log_user(@data[:contacts].keys.join(',')) 
+      end
       recv()
     end
 
@@ -144,7 +146,7 @@ module RubySoul
             @mutex_connected.synchronize do
               @connected = false
             end
-            exit
+            start()
           end
         end
       end
@@ -285,7 +287,7 @@ module RubySoul
     end
 
     def save_config
-      File.open("conf/config.yml", "w") {|file| file.puts(@data[:config].to_yaml.to_s); file.close;}
+      File.open("conf/config.yml", "w") {|file| file.puts(@data[:config].to_yaml.to_s)}
     end
 
     def get_contacts
@@ -293,7 +295,7 @@ module RubySoul
     end
 
     def save_contacts
-      File.open("conf/contacts.yml", "w") {|file| file.puts(@data[:contacts].to_yaml.to_s); file.close;}
+      File.open("conf/contacts.yml", "w") {|file| file.puts(@data[:contacts].to_yaml.to_s)}
     end
 
     def add_contacts(users)
@@ -407,9 +409,9 @@ module RubySoul
         msg.chomp!
         Readline::HISTORY.push(msg) if (msg.length > 0)
         if (msg == "?" || msg == "help")
-          RubySoul::help()
+          STDOUT.puts RubySoul::msg_help()
         elsif (msg == "credits" || msg == "credit")
-          RubySoul::credits()
+          STDOUT.puts RubySoul::msg_credits()
         elsif (msg == "exit" || msg == "bye" || msg == "q" || msg == "quit")
           @ns.stop(false)
         else ## Parse complexe command line
@@ -430,7 +432,7 @@ module RubySoul
               when "config"
                 puts @ns.data[:config].to_yaml.to_s
               else
-                RubySoul::print_command_not_found()
+                STDOUT.puts RubySoul::msg_command_not_found()
               end
             when "config"
               found = case msg.split(":")[1]
@@ -454,7 +456,7 @@ module RubySoul
               when "system"
                 @ns.data[:config][:system] = msg.split(":")[2] if msg.split(":").length == 3
               else
-                RubySoul::print_command_not_found()
+                STDOUT.puts RubySoul::msg_command_not_found()
                 false
               end
               @ns.save_config() if found
@@ -465,27 +467,27 @@ module RubySoul
               when "connected_contacts"
                 @ns.list_connected_contacts()
               else
-                RubySoul::print_command_not_found()
+                STDOUT.puts RubySoul::msg_command_not_found()
               end
             when "add"
               case msg.split(":")[1]
               when "contacts"
                 @ns.add_user(msg.split(":")[2]) if msg.split(":").length == 3
               else
-                RubySoul::print_command_not_found()
+                RubySoul::msg_command_not_found()
               end
             when "del"
               case msg.split(":")[1]
               when "contacts"
                 @ns.del_user(msg.split(":")[2]) if msg.split(":").length == 3
               else
-                RubySoul::print_command_not_found()
+                STDOUT.puts RubySoul::msg_command_not_found()
               end
             else
-              RubySoul::print_command_not_found() if (msg.length > 0)
+              STDOUT.puts RubySoul::msg_command_not_found() if (msg.length > 0)
             end
           else
-            RubySoul::print_command_not_found() if (msg.length > 0)
+            STDOUT.puts RubySoul::msg_command_not_found() if (msg.length > 0)
           end
         end
       end
