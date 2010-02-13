@@ -1,0 +1,3 @@
+#--- | Application server
+:host: 'ns-server.epita.fr'	#--- | IONIS netsoul server
+:port: '4242'				#--- | IONIS netsoul port
