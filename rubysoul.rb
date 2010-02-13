@@ -1,8 +1,8 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/ruby
 begin
   require 'netsoul'
 rescue LoadError
-  puts "Error: #{$!}"
+  STDERR.puts "Error: #{$!}"
   exit
 end
 
@@ -10,7 +10,5 @@ begin
   r = RubySoul::NetSoul.new
   r.start()
 rescue
-  puts "#{$!}"
-ensure
-  retry
+  STDERR.puts "#{$!}"
 end
