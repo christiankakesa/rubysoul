@@ -22,7 +22,7 @@ module RubySoul
     str += "*                       state, location, user_group, system                   *\n"
     str += "* [send message]      : send_msg:login_1 login_2 login_3:your message         *\n"
     str += "* [list]              : list:contacts, list:connected_contacts                *\n"
-    str += "* [add]               : add:contcats:login_1 login_2 login_3                  *\n"
+    str += "* [add]               : add:contacts:login_1 login_2 login_3                  *\n"
     str += "* [del]               : del:contacts:login_1 login_2 login_3                  *\n"
     str += "*******************************************************************************\n"
     str
