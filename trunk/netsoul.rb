@@ -431,7 +431,10 @@ module RubySoul
               when "state"
                 puts "Your current state is \"#{@ns.current_state}\""
               when "config"
-                puts @ns.data[:config].to_yaml.to_s
+              	tmpcfg = @ns.data[:config]
+              	tmpcfg[:socks_password] = "********"
+              	tmpcfg[:unix_password] = "********"
+                puts tmpcfg.to_yaml.to_s
               else
                 STDOUT.puts RubySoul::msg_command_not_found()
               end
